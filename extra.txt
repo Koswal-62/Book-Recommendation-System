@@ -1,0 +1,20 @@
+def fetch_poster1(book_title):
+    url = f"https://www.googleapis.com/books/v1/volumes?q={book_title}&key={key}"
+    
+    try:
+        # Fetch data from the API
+        response = requests.get(url)
+        data = response.json()
+
+        # Extract relevant data
+        if "items" in data:
+            # Extract the first book's poster image link
+            book_info = data["items"][0]["volumeInfo"]
+            poster_link = book_info["imageLinks"]["thumbnail"] if "imageLinks" in book_info else None
+            return poster_link
+        else:
+            return None
+
+    except Exception as e:
+        print(f"Error fetching book details: {e}")
+        return None
